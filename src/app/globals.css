@@ -1,0 +1,13 @@
+:root {
+    --font-inter: 'Inter', sans-serif;
+    --font-dm-serif: 'DM Serif Display', serif;
+  }
+  
+  body {
+    font-family: var(--font-inter);
+  }
+  
+  h1, h2, h3, h4, a {
+    font-family: var(--font-dm-serif);
+  }
+  

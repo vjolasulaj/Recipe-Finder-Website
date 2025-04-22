@@ -1,0 +1,20 @@
+.trendingrecipesContainer{
+    margin-top: 80px;
+    text-align: center;
+}
+
+.trendingrecipesContainer h2{
+    font-size: 20px;
+    font-family: var(--font-dm-serif);
+    color: rgb(48, 47, 47);
+}
+
+.recipeGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.recipeGrid h3{
+    font-size: 15px;
+    color: rgb(48, 47, 47);
+}
