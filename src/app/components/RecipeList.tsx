@@ -89,11 +89,60 @@ const RecipeList = () => {
           />
           <p>Japanese</p>
         </div>
+        <div
+        className={styles.cuisineImage}
+        onClick={()=> fetchRecipesByCuisine("French")}
+        >
+          <Image
+          src="/french.jpg"
+          alt="French Cuisine"
+          width={150}
+          height={150}
+          style={{objectFit:"cover", borderRadius:"50%"}}
+           />
+           <p>French</p>
+        </div>
+        <div
+          className={styles.cuisineImage}
+          onClick={() => fetchRecipesByCuisine("Indian")}
+        >
+          <Image
+            src="/indian.jpg"
+            alt="Indian Cuisine"
+            width={150}
+            height={150}
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+          />
+          <p>Indian</p>
+        </div>
+        <div
+          className={styles.cuisineImage}
+          onClick={() => fetchRecipesByCuisine("Spanish")}
+        >
+          <Image
+            src="/spanish.jpg"
+            alt="Spanish Cuisine"
+            width={150}
+            height={150}
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+          />
+          <p>Spanish</p>
+        </div>
+        <div
+          className={styles.cuisineImage}
+          onClick={() => fetchRecipesByCuisine("Thai")}
+        >
+          <Image
+            src="/thailand.jpg"
+            alt="Thailand Cuisine"
+            width={150}
+            height={150}
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+          />
+          <p>Thailand</p>
+        </div>
       </div>
-
-      {/* {loading && <p>Loading recipes...</p>} */}
-
-      <div className={styles.recipeResults}>
+      {/* <div className={styles.recipeResults}>
         {recipes.map((recipe) => (
           <div key={recipe.id} className={styles.recipeCard}>
             <Image
@@ -101,12 +150,12 @@ const RecipeList = () => {
               alt={recipe.title}
               width={200}
               height={150}
-              style={{ objectFit: "cover", borderRadius: "10px" }}
+              style={{ objectFit: "contain", borderRadius: "10px" }}
             />
             <p>{recipe.title}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -2,6 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "../styles/TrendingRecipes.module.css";
+import { SwiperSlide, Swiper } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 
 const API_KEY = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
 
@@ -35,16 +40,37 @@ const TrendingRecipes = () => {
 
   return (
     <div className={styles.trendingrecipesContainer}>
-      <h2>Trending Recipes</h2>
-        <div className={styles.recipeGrid}>
-          {recipes.map((recipe) => (
-            <div key={recipe.id} className={styles.recipeCard}>
+    <h2>Trending Recipes</h2>
+    <div className={styles.swiperWrapper}>
+      <Swiper
+        modules={[Navigation]}
+        spaceBetween={20}
+        slidesPerView={3}
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        }}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+      >
+        {recipes.map((recipe) => (
+          <SwiperSlide key={recipe.id}>
+            <div className={styles.recipeCard}>
               <img src={recipe.image} alt={recipe.title} />
               <h3>{recipe.title}</h3>
             </div>
-          ))}
+          </SwiperSlide>
+        ))}
+        <div className={styles.customNav}>
+          <div className="swiper-button-prev"></div>
+          <div className="swiper-button-next"></div>
         </div>
+      </Swiper>
     </div>
+  </div>
   );
 };
 

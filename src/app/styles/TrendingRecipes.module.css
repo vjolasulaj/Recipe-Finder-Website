@@ -18,3 +18,18 @@
     font-size: 15px;
     color: rgb(48, 47, 47);
 }
+
+
+.recipeCard img{
+    width: 60%;
+    height: 170px;
+    object-fit: contain;
+}
+
+.recipeCard h3{
+    font-family: var(--font-inter);
+    font-size: 15px;
+    font-weight: 400;
+    width: 400px;
+    margin: auto;
+}
