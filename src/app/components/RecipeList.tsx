@@ -63,7 +63,7 @@ const RecipeList = () => {
           onClick={() => handleCuisineClick("Japanese")}
         >
           <Image
-            src="/japanese.jpg"
+            src="/japanesehd.jpg"
             alt="Japanese Cuisine"
             width={150}
             height={150}
