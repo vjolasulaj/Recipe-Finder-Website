@@ -1,36 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "../styles/RecipeList.module.css";
 
 const RecipeList = () => {
-  type Recipe = {
-    id: number;
-    title: string;
-    image: string;
+  const router = useRouter();
+
+  const handleCuisineClick = (cuisine: string) => {
+    console.log("Navigating to:", cuisine); 
+    router.push(`/recipe/${cuisine}`);
   };
 
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const API_KEY = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
-
-  const fetchRecipesByCuisine = async (cuisine: string) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=6&sort=popularity&apiKey=${API_KEY}`
-      );
-      const data = await response.json();
-      setRecipes(data.results || []);
-    } catch (error) {
-      console.error("Error fetching recipes:", error);
-      setRecipes([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className={styles.recipeContainer}>
@@ -39,7 +21,7 @@ const RecipeList = () => {
       <div className={styles.cuisineImages}>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Greek")}
+          onClick={() => handleCuisineClick("Greek")}
         >
           <Image
             src="/greek.jpg"
@@ -52,7 +34,7 @@ const RecipeList = () => {
         </div>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Italian")}
+          onClick={() => handleCuisineClick("Italian")}
         >
           <Image
             src="/italian.jpg"
@@ -65,7 +47,7 @@ const RecipeList = () => {
         </div>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Mexican")}
+          onClick={() => handleCuisineClick("Mexican")}
         >
           <Image
             src="/mexican.jpg"
@@ -78,7 +60,7 @@ const RecipeList = () => {
         </div>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Japanese")}
+          onClick={() => handleCuisineClick("Japanese")}
         >
           <Image
             src="/japanese.jpg"
@@ -90,21 +72,21 @@ const RecipeList = () => {
           <p>Japanese</p>
         </div>
         <div
-        className={styles.cuisineImage}
-        onClick={()=> fetchRecipesByCuisine("French")}
+          className={styles.cuisineImage}
+          onClick={() => handleCuisineClick("French")}
         >
           <Image
-          src="/french.jpg"
-          alt="French Cuisine"
-          width={150}
-          height={150}
-          style={{objectFit:"cover", borderRadius:"50%"}}
-           />
-           <p>French</p>
+            src="/french.jpg"
+            alt="French Cuisine"
+            width={150}
+            height={150}
+            style={{ objectFit: "cover", borderRadius: "50%" }}
+          />
+          <p>French</p>
         </div>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Indian")}
+          onClick={() => handleCuisineClick("Indian")}
         >
           <Image
             src="/indian.jpg"
@@ -117,7 +99,7 @@ const RecipeList = () => {
         </div>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Spanish")}
+          onClick={() => handleCuisineClick("Spanish")}
         >
           <Image
             src="/spanish.jpg"
@@ -130,7 +112,7 @@ const RecipeList = () => {
         </div>
         <div
           className={styles.cuisineImage}
-          onClick={() => fetchRecipesByCuisine("Thai")}
+          onClick={() => handleCuisineClick("Thai")}
         >
           <Image
             src="/thailand.jpg"
@@ -142,20 +124,6 @@ const RecipeList = () => {
           <p>Thailand</p>
         </div>
       </div>
-      {/* <div className={styles.recipeResults}>
-        {recipes.map((recipe) => (
-          <div key={recipe.id} className={styles.recipeCard}>
-            <Image
-              src={recipe.image}
-              alt={recipe.title}
-              width={200}
-              height={150}
-              style={{ objectFit: "contain", borderRadius: "10px" }}
-            />
-            <p>{recipe.title}</p>
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 };
