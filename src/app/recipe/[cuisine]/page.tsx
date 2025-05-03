@@ -1,6 +1,9 @@
+"use client"
 
-import { notFound } from "next/navigation";
+import { useState, useEffect } from "react";
+import styles from "../../styles/RecipeList.module.css";
 import Image from "next/image";
+import RecipeModal from "@/app/components/Modal";
 
 type Recipe = {
   id: number;
@@ -17,7 +20,7 @@ async function fetchRecipes(cuisine: string): Promise<Recipe[]> {
   }
 
   const res = await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=9&sort=popularity&apiKey=${API_KEY}`,
+    `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&number=9&sort=popularity&apiKey=${API_KEY}`
   );
 
   if (!res.ok) {
@@ -29,24 +32,45 @@ async function fetchRecipes(cuisine: string): Promise<Recipe[]> {
   return data.results || [];
 }
 
-export default async function CuisinePage({
+export default function CuisinePage({
   params,
 }: {
   params: { cuisine: string };
 }) {
   const { cuisine } = params;
-  const recipes = await fetchRecipes(cuisine);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (!recipes.length) {
-    return notFound();
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedRecipes = await fetchRecipes(cuisine);
+      setRecipes(fetchedRecipes);
+    };
+
+    fetchData();
+  }, [cuisine]);
+
+  const openModal = (id: number) => {
+    setSelectedRecipeId(id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); 
+    setSelectedRecipeId(null); 
+  };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>{cuisine} Recipes </h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "6rem"}}>
+    <div style={{ padding: "2rem" }} className={styles.recipeContainer}>
+      <h1>{cuisine} Recipes</h1>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "6rem", justifyContent:"center" }}>
         {recipes.map((recipe) => (
-          <div key={recipe.id} style={{ width: "200px" }}>
+          <div
+            key={recipe.id}
+            style={{ width: "200px", cursor: "pointer" }}
+            onClick={() => openModal(recipe.id)} 
+          >
             <Image
               src={recipe.image}
               alt={recipe.title}
@@ -58,6 +82,14 @@ export default async function CuisinePage({
           </div>
         ))}
       </div>
+
+      {isModalOpen && (
+        <RecipeModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          recipeId={selectedRecipeId} 
+        />
+      )}
     </div>
   );
 }
